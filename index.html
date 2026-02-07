@@ -1,1 +1,341 @@
-# 42bzh.github.io
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>42.bzh — ping2A</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg-primary: #ffffff;
+      --bg-secondary: #f5f5f5;
+      --bg-card: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #666666;
+      --border: #e0e0e0;
+      --accent: #2196F3;
+      --accent-hover: #1976D2;
+      --shadow: rgba(0, 0, 0, 0.1);
+    }
+
+    [data-theme="dark"] {
+      --bg-primary: #1a1a1a;
+      --bg-secondary: #2d2d2d;
+      --bg-card: #252525;
+      --text-primary: #e0e0e0;
+      --text-secondary: #a0a0a0;
+      --border: #404040;
+      --accent: #42A5F5;
+      --accent-hover: #64B5F6;
+      --shadow: rgba(0, 0, 0, 0.3);
+    }
+
+    html {
+      -webkit-text-size-adjust: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      font-size: 0.875rem;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.5;
+      transition: background-color 0.3s, color 0.3s;
+      overflow-x: hidden;
+      min-width: 0;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 1.25rem max(1rem, env(safe-area-inset-left)) 1.25rem max(1rem, env(safe-area-inset-right));
+      width: 100%;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo-text {
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin: 0;
+    }
+
+    .theme-toggle {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 0.5rem 1rem;
+      min-height: 44px;
+      min-width: 44px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+      color: var(--text-primary);
+      transition: all 0.2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .theme-toggle:hover {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    .section {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 4px var(--shadow);
+      min-width: 0;
+    }
+
+    .section h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+      color: var(--text-primary);
+    }
+
+    .section p {
+      color: var(--text-secondary);
+      font-size: 0.8125rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .section ul {
+      margin: 0.35rem 0 0 1rem;
+      color: var(--text-primary);
+      font-size: 0.8125rem;
+    }
+
+    .section li {
+      margin-bottom: 0.35rem;
+    }
+
+    .section a {
+      color: var(--accent);
+      text-decoration: none;
+      word-break: break-word;
+      overflow-wrap: break-word;
+    }
+
+    .section a:hover {
+      text-decoration: underline;
+    }
+
+    .section code {
+      font-size: 0.9em;
+      padding: 0.08em 0.3em;
+      background: var(--bg-secondary);
+      border-radius: 4px;
+      font-family: ui-monospace, monospace;
+    }
+
+    .project-grid {
+      display: grid;
+      gap: 0.5rem;
+    }
+
+    .project-item {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      min-width: 0;
+    }
+
+    .section li {
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+
+    .project-item a {
+      font-weight: 500;
+    }
+
+    .project-desc {
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+    }
+
+    .org-label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-secondary);
+      margin-top: 0.75rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .org-label:first-of-type { margin-top: 0; }
+
+    footer {
+      margin-top: 1.5rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem max(0.75rem, env(safe-area-inset-left)) 1rem max(0.75rem, env(safe-area-inset-right));
+      }
+      header {
+        flex-wrap: wrap;
+        gap: 0.75rem;
+      }
+      .logo-text { font-size: 1.15rem; }
+      .section {
+        padding: 1rem max(1rem, env(safe-area-inset-left)) 1rem max(1rem, env(safe-area-inset-right));
+      }
+      .section ul {
+        margin-left: 1rem;
+        padding-right: 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body { font-size: 0.9375rem; }
+      .container {
+        padding: 0.75rem max(0.5rem, env(safe-area-inset-left)) 0.75rem max(0.5rem, env(safe-area-inset-right));
+      }
+      .section {
+        padding: 0.9rem max(0.75rem, env(safe-area-inset-left)) 0.9rem max(0.75rem, env(safe-area-inset-right));
+      }
+      .section ul { margin-left: 0.85rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1 class="logo-text">42.bzh</h1>
+      <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">🌙 Dark</button>
+    </header>
+
+    <section class="section">
+      <p>You can reach me at <strong>ping2A (at) 42 (dot) bzh</strong></p>
+      <p>I spent my last decade at Google in the Android Security Team, to fight against Android malware !</p>
+      <p>I'm now working at CERT-EDF, to keep the light on ;)</p>
+    </section>
+
+    <section class="section">
+      <h2>Public projects</h2>
+      <p class="project-desc">Open source work across Androguard, IsMyPhonePwned, and personal repos.</p>
+
+      <p class="org-label">Androguard</p>
+      <ul class="project-grid">
+        <li class="project-item"><a href="https://github.com/androguard/androguard" target="_blank" rel="noopener">androguard</a> — Python toolkit for reverse engineering, static analysis and pentesting of Android apps (APK, DEX, resources).</li>
+        <li class="project-item"><a href="https://github.com/androguard/goauld" target="_blank" rel="noopener">goauld</a> — Dynamic code injection into Linux/Android processes via <code>/proc/pid/mem</code>; no ptrace, Rust.</li>
+        <li class="project-item"><a href="https://github.com/androguard/dex-parser" target="_blank" rel="noopener">dex-parser</a> — Low-level DEX parser in Rust; the scalpel for Dalvik executables.</li>
+        <li class="project-item"><a href="https://github.com/androguard/dex-bytecode" target="_blank" rel="noopener">dex-bytecode</a> — DEX bytecode disassembler and assembler in Rust; works with dex-parser.</li>
+        <li class="project-item"><a href="https://github.com/androguard/dex-decompiler" target="_blank" rel="noopener">dex-decompiler</a> — DEX to high-level code decompiler in Rust; builds on dex-parser and dex-bytecode.</li>
+        <li class="project-item"><a href="https://github.com/androguard/axml-parser" target="_blank" rel="noopener">axml-parser</a> / <a href="https://github.com/androguard/axml" target="_blank" rel="noopener">axml</a> — Parse Android binary XML (manifest, resources); Rust parser and Python bindings.</li>
+        <li class="project-item"><a href="https://github.com/androguard/apk-parser" target="_blank" rel="noopener">apk-parser</a> — Parse APK metadata and contents in Python without full unpacking.</li>
+        <li class="project-item"><a href="https://github.com/androguard/yara-droid" target="_blank" rel="noopener">yara-droid</a> — Small, fast Yara-X-style rule matching for Android/DEX artifacts (Rust, GPL-3).</li>
+        <li class="project-item"><a href="https://github.com/androguard/freedump" target="_blank" rel="noopener">freedump</a> — Dump process memory on Android/Linux using Frida; useful for forensics and analysis.</li>
+      </ul>
+
+      <p class="org-label">IsMyPhonePwned</p>
+      <ul class="project-grid">
+        <li class="project-item"><a href="https://github.com/IsMyPhonePwned/mimic" target="_blank" rel="noopener">mimic</a> — Rust library to detect files crafted to exploit parsing CVEs (DNG/RTF/TTF/RAR/PDF). Analysis runs in-browser; nothing uploaded.</li>
+        <li class="project-item"><a href="https://github.com/IsMyPhonePwned/bugreport-extractor-library" target="_blank" rel="noopener">bugreport-extractor-library</a> — Rust library to read and extract structured data from Android bug reports for pwned-check and analysis.</li>
+        <li class="project-item"><a href="https://github.com/IsMyPhonePwned/webadb-rs" target="_blank" rel="noopener">webadb-rs</a> — Run ADB commands from the browser via WebUSB; powers the IsMyPhonePwned bugreport flow.</li>
+      </ul>
+
+      <p class="org-label">ping2A (personal)</p>
+      <ul class="project-grid">
+        <li class="project-item"><a href="https://github.com/ping2A/CanIGoIn" target="_blank" rel="noopener">CanIGoIn</a> — Security Chrome extension for clickfix and safe-browsing fun.</li>
+        <li class="project-item"><a href="https://github.com/ping2A/sigmazero" target="_blank" rel="noopener">sigmazero</a> — Evaluate Sigma detection rules in pure Rust; no Python runtime.</li>
+        <li class="project-item"><a href="https://github.com/ping2A/IronSift" target="_blank" rel="noopener">IronSift</a> — “Where’s Waldo?” style security and analysis tool (Rust).</li>
+        <li class="project-item"><a href="https://github.com/ping2A/BadUSBPy" target="_blank" rel="noopener">BadUSBPy</a> — BadUSB-style device emulation and scripting in Python.</li>
+        <li class="project-item"><a href="https://github.com/ping2A/anomark-rs" target="_blank" rel="noopener">anomark-rs</a> — Anomark (Android app signing / anomaly detection) reimplemented in Rust with a bit of AI.</li>
+      </ul>
+
+      <p class="org-label">EDF</p>
+      <ul class="project-grid">
+        <li class="project-item"><a href="https://github.com/CERT-EDF/dumpstate-py" target="_blank" rel="noopener">dumpstate-py</a> — Pure Python package to extract useful structures from Android Bug Reports for forensics (battery, packages, processes, power, sockets, etc.). I maintain a <a href="https://github.com/ping2A/dumpstate-py" target="_blank" rel="noopener">fork</a>.</li>
+        <li class="project-item"><a href="https://github.com/CERT-EDF/rusty-magpie" target="_blank" rel="noopener">rusty-magpie</a> — Android artifacts collector and Yara-X scanner in Rust; collects processes and file lists on-device and runs Yara rules directly on the phone.</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>Papers &amp; talks</h2>
+      <ul>
+        <li><strong>DroidKaigi Tokyo 2023</strong> — <em>Securing Android Applications: The not so secret guide explained</em></li>
+        <li><strong>DroidCon San Francisco 2023</strong> — <em>Securing Android Applications: The not so secret guide explained</em></li>
+        <li><strong>Google Security Blog 2017</strong> — <a href="https://security.googleblog.com/2017/11/tizi-detecting-and-blocking-socially.html" target="_blank" rel="noopener">Tizi: Detecting and blocking socially engineered spyware on Android</a></li>
+        <li><strong>Pacsec Japan 2012</strong> — <em>New "open source" step in Android Application Analysis</em></li>
+        <li><strong>Phrack 68 2012</strong> — <em>Similarities for Fun and Profit</em></li>
+        <li><strong>HICSS 2012</strong> — <em>Android: Static Analysis Using Similarity Distance</em></li>
+        <li><strong>Blackhat Abu Dhabi 2011</strong> — <em>Android: from reversing to decompilation</em></li>
+        <li><strong>Computer Security Congress 2011</strong> — <em>Analyzing Android Applications</em></li>
+        <li><strong>EICAR 2011</strong> — <em>Android Malwares: is it a dream?</em></li>
+        <li><strong>Hack.lu 2010</strong> — <em>Dynamic, Metamorphic (and open source) Virtual Machines</em></li>
+        <li><strong>RSSIL 2010</strong> — <em>Questions autour des antivirus</em></li>
+        <li><strong>ECIW 2010</strong> — <em>Forensic and Software (un)Obfuscation</em></li>
+        <li><strong>ECIW 2010</strong> — <em>BinThavro: towards a useful and fast tool for Goodware and Malware Analysis</em></li>
+        <li><strong>iAWACS 2010</strong> — <em>Processor-Dependant Malware ... and codes</em></li>
+        <li><strong>Hack.lu 2009</strong> — <em>Implementation of K-ary Viruses in python</em></li>
+        <li><strong>Hack.lu 2009</strong> — <em>iAWACS 2009 Debrief</em></li>
+        <li><strong>EICAR 2009</strong> — <em>Detecting (and creating!) of an HVM rootkit (aka Bluepill-like)</em></li>
+        <li><strong>EICAR 2009</strong> — <em>Memory Live Forensics</em></li>
+        <li><strong>SSTIC 2008</strong> — <em>ERESI: Une plate-forme d'analyse binaire au niveau noyau</em></li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>Tools &amp; older projects</h2>
+      <ul>
+        <li><strong>Goauld</strong> — Dynamic injection tool for Linux/Android process via /proc/pid/mem — <a href="https://github.com/androguard/goauld" target="_blank" rel="noopener">github.com/androguard/goauld</a></li>
+        <li><strong>Androguard</strong> — Reverse engineering and pentesting for Android applications — <a href="https://github.com/androguard/androguard" target="_blank" rel="noopener">github.com/androguard/androguard</a></li>
+        <li><strong>PX8 / Unicorn console</strong> — Open source fantasy console — <a href="https://github.com/PikuseruConsole/pikuseru" target="_blank" rel="noopener">github.com/PikuseruConsole/pikuseru</a></li>
+        <li><strong>Elsim</strong> — Elements Similarities — <a href="https://code.google.com/archive/p/elsim/" target="_blank" rel="noopener">code.google.com/archive/p/elsim/</a></li>
+        <li><strong>Draugr</strong> — Live memory forensics on Linux (/dev/(k)mem, memory dump) — <a href="https://code.google.com/archive/p/draugr/" target="_blank" rel="noopener">code.google.com/archive/p/draugr/</a></li>
+        <li><strong>Kernsh (ERESI Project)</strong> — Interactive, modular, and scriptable interpreter of the ERESI language dedicated to static and runtime accessibility of the kernel ondisk image and the kernel memory</li>
+        <li><strong>Sanson The Headman</strong> — A dive in the wonderful world of memory (Remote Userland Execve ...)</li>
+      </ul>
+    </section>
+
+    <footer>
+      <p><a href="https://github.com/ping2A" target="_blank" rel="noopener">GitHub</a> · <a href="https://www.42.bzh" target="_blank" rel="noopener">42.bzh</a></p>
+    </footer>
+  </div>
+
+  <script>
+    (function() {
+      const storageKey = '42bzh-theme';
+      const preferred = localStorage.getItem(storageKey) || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', preferred);
+      const btn = document.getElementById('theme-toggle');
+      function updateLabel() {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        btn.textContent = isDark ? '☀️ Light' : '🌙 Dark';
+      }
+      updateLabel();
+      btn.addEventListener('click', function() {
+        const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem(storageKey, next);
+        updateLabel();
+      });
+    })();
+  </script>
+</body>
+</html>
