@@ -54,6 +54,21 @@
       width: 100%;
     }
 
+    .profile-top {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .profile-img {
+      display: block;
+      margin: 0 auto;
+      max-width: 200px;
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px var(--shadow);
+    }
+
     header {
       display: flex;
       justify-content: space-between;
@@ -215,6 +230,7 @@
       .container {
         padding: 0.75rem max(0.5rem, env(safe-area-inset-left)) 0.75rem max(0.5rem, env(safe-area-inset-right));
       }
+      .profile-img { max-width: 160px; }
       .section {
         padding: 0.9rem max(0.75rem, env(safe-area-inset-left)) 0.9rem max(0.75rem, env(safe-area-inset-right));
       }
@@ -224,6 +240,9 @@
 </head>
 <body>
   <div class="container">
+    <div class="profile-top">
+      <img src="assets/profile.png" alt="ping2A" class="profile-img" />
+    </div>
     <header>
       <h1 class="logo-text">42.bzh</h1>
       <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">🌙 Dark</button>
