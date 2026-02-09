@@ -537,11 +537,36 @@
       updateIndicatorsSummary();
     });
 
+    function isWebAssemblySupported() {
+      try {
+        return typeof WebAssembly === 'object' &&
+          typeof WebAssembly.instantiate === 'function' &&
+          (typeof WebAssembly.Memory === 'function' || (WebAssembly.Memory && typeof WebAssembly.Memory === 'function'));
+      } catch (_) {
+        return false;
+      }
+    }
+
     async function init() {
       log('init: starting');
       statusEl.textContent = 'Loading…';
       statusEl.className = 'status loading';
       setIndicatorsFetchStatus('loading', 'Indicators: loading…');
+
+      if (!isWebAssemblySupported()) {
+        statusEl.textContent = 'WebAssembly is not supported in this browser.';
+        statusEl.className = 'status error';
+        setIndicatorsFetchStatus('fail', 'WebAssembly not supported');
+        return;
+      }
+
+      if (typeof window !== 'undefined' && window.location && window.location.protocol === 'file:') {
+        statusEl.textContent = 'Open this page over HTTP, not file://. Run: cd wasm && python -m http.server 8080 , then visit http://localhost:8080';
+        statusEl.className = 'status error';
+        setIndicatorsFetchStatus('fail', 'Use HTTP (file:// not supported for WASM)');
+        return;
+      }
+
       try {
         log('init: loading WASM module');
         const { default: initWasm, ShellWeDanceApp } = await import('./pkg/shell_we_dance_wasm.js');
@@ -611,11 +636,18 @@
         log('init: done');
       } catch (e) {
         error('init failed:', e);
+        const msg = e && (e.message || String(e));
         const statusText = indicatorsFetchStatusEl.textContent;
         if (statusText.startsWith('Indicators: ') && (statusText.includes('fetching') || statusText.includes('loading') || statusText.includes('parsing'))) {
-          setIndicatorsFetchStatus('fail', 'Indicators: failed — ' + (e.message || String(e)));
+          setIndicatorsFetchStatus('fail', 'Indicators: failed — ' + msg);
         }
-        statusEl.textContent = 'Failed: ' + e.message;
+        // If WASM is supported but load failed, the glue code may show "not supported"; show the real error and a hint
+        const isWasmLoadFailure = !app && (msg.toLowerCase().includes('webassembly') || msg.toLowerCase().includes('wasm') || msg.toLowerCase().includes('fetch'));
+        if (isWasmLoadFailure) {
+          statusEl.textContent = 'WASM failed to load: ' + msg + '. Serve over HTTP (not file://), allow CORS if needed, and check the console.';
+        } else {
+          statusEl.textContent = 'Failed: ' + msg;
+        }
         statusEl.className = 'status error';
       }
     }
