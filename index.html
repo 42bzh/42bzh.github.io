@@ -109,6 +109,51 @@
       border-color: var(--accent);
     }
 
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .lang-toggle {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 0.35rem 0.75rem;
+      min-height: 44px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      font-size: 0.8125rem;
+      color: var(--text-primary);
+      transition: all 0.2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .lang-toggle:hover {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    .lang-toggle.active {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    .lang-toggle .flag-icon {
+      width: 1.25rem;
+      height: 0.833rem;
+      display: block;
+      flex-shrink: 0;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
     .section {
       background: var(--bg-card);
       border: 1px solid var(--border);
@@ -245,18 +290,44 @@
     </div>
     <header>
       <h1 class="logo-text">42.bzh</h1>
-      <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">🌙 Dark</button>
+      <div class="header-actions">
+        <button type="button" class="lang-toggle" id="lang-toggle" aria-label="Switch language" title="Brezhoneg / English">
+          <span class="flag-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 16" width="24" height="16" role="img" aria-label="Gwenn ha du">
+              <!-- 9 stripes (5 black, 4 white) -->
+              <rect fill="#fff" width="24" height="1.78"/>
+              <rect fill="#000" y="1.78" width="24" height="1.78"/>
+              <rect fill="#fff" y="3.56" width="24" height="1.78"/>
+              <rect fill="#000" y="5.33" width="24" height="1.78"/>
+              <rect fill="#fff" y="7.11" width="24" height="1.78"/>
+              <rect fill="#000" y="8.89" width="24" height="1.78"/>
+              <rect fill="#fff" y="10.67" width="24" height="1.78"/>
+              <rect fill="#000" y="12.44" width="24" height="1.78"/>
+              <rect fill="#fff" y="14.22" width="24" height="1.78"/>
+              <!-- Canton (white) -->
+              <rect fill="#fff" width="8" height="8"/>
+              <circle fill="#000" cx="2" cy="2" r="0.5"/>
+              <circle fill="#000" cx="5" cy="2" r="0.5"/>
+              <circle fill="#000" cx="2" cy="4.5" r="0.5"/>
+              <circle fill="#000" cx="5" cy="4.5" r="0.5"/>
+              <circle fill="#000" cx="3.5" cy="6.5" r="0.5"/>
+            </svg>
+          </span>
+          <span id="lang-label">EN</span>
+        </button>
+        <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">🌙 Dark</button>
+      </div>
     </header>
 
     <section class="section">
-      <p>You can reach me at <strong>ping2A (at) 42 (dot) bzh</strong></p>
-      <p>I spent my last decade at Google in the Android Security Team, to fight against Android malware !</p>
-      <p>I'm now working at CERT-EDF, to keep the light on ;)</p>
+      <p data-i18n="intro1"></p>
+      <p data-i18n="intro2"></p>
+      <p data-i18n="intro3"></p>
     </section>
 
     <section class="section">
-      <h2>Public projects</h2>
-      <p class="project-desc">Open source work across Androguard, IsMyPhonePwned, and personal repos.</p>
+      <h2 data-i18n="public-projects"></h2>
+      <p class="project-desc" data-i18n="project-desc"></p>
 
       <p class="org-label">Androguard</p>
       <ul class="project-grid">
@@ -278,7 +349,7 @@
         <li class="project-item"><a href="https://github.com/IsMyPhonePwned/webadb-rs" target="_blank" rel="noopener">webadb-rs</a> — Run ADB commands from the browser via WebUSB; powers the IsMyPhonePwned bugreport flow.</li>
       </ul>
 
-      <p class="org-label">ping2A (personal)</p>
+      <p class="org-label" data-i18n="personal">ping2A (personal)</p>
       <ul class="project-grid">
         <li class="project-item"><a href="https://github.com/ping2A/CanIGoIn" target="_blank" rel="noopener">CanIGoIn</a> — Security Chrome extension for clickfix and safe-browsing fun.</li>
         <li class="project-item"><a href="https://github.com/ping2A/ShellWeDance" target="_blank" rel="noopener">ShellWeDance</a> — PowerShell command-line analysis (psexposed-style indicators) and Sigma rule evaluation in Rust; decodes <code>-EncodedCommand</code>, WASM UI.</li>
@@ -296,7 +367,7 @@
     </section>
 
     <section class="section">
-      <h2>Papers &amp; talks</h2>
+      <h2 data-i18n="papers"></h2>
       <ul>
         <li><strong>DroidKaigi Tokyo 2023</strong> — <em>Securing Android Applications: The not so secret guide explained</em></li>
         <li><strong>DroidCon San Francisco 2023</strong> — <em>Securing Android Applications: The not so secret guide explained</em></li>
@@ -321,7 +392,7 @@
     </section>
 
     <section class="section">
-      <h2>Tools &amp; older projects</h2>
+      <h2 data-i18n="tools"></h2>
       <ul>
         <li><strong>PX8 / Unicorn console</strong> — Open source fantasy console — <a href="https://github.com/PikuseruConsole/pikuseru" target="_blank" rel="noopener">github.com/PikuseruConsole/pikuseru</a></li>
         <li><strong>Elsim</strong> — Elements Similarities — <a href="https://code.google.com/archive/p/elsim/" target="_blank" rel="noopener">code.google.com/archive/p/elsim/</a></li>
@@ -338,21 +409,88 @@
 
   <script>
     (function() {
-      const storageKey = '42bzh-theme';
-      const preferred = localStorage.getItem(storageKey) || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-      document.documentElement.setAttribute('data-theme', preferred);
-      const btn = document.getElementById('theme-toggle');
-      function updateLabel() {
-        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-        btn.textContent = isDark ? '☀️ Light' : '🌙 Dark';
+      var LANG_KEY = '42bzh-lang';
+      var THEME_KEY = '42bzh-theme';
+
+      var t = {
+        intro1: {
+          en: 'You can reach me at <strong>ping2A (at) 42 (dot) bzh</strong>',
+          br: 'E c\'hallit mont e darempred ganin dre <strong>ping2A (at) 42 (dot) bzh</strong>'
+        },
+        intro2: {
+          en: 'I spent my last decade at Google in the Android Security Team, to fight against Android malware !',
+          br: 'Tremenet am eus ma dekvloaz diwezhañ e Google e Skipailh Diogelroez Android, evit stourm a-enep d\'ar malware Android !'
+        },
+        intro3: {
+          en: "I'm now working at CERT-EDF, to keep the light on ;)",
+          br: 'Labourat a ran bremañ e CERT-EDF, evit mirout ar gouloù war enaou ;)'
+        },
+        'public-projects': { en: 'Public projects', br: 'Raktresoù foran' },
+        'project-desc': {
+          en: 'Open source work across Androguard, IsMyPhonePwned, and personal repos.',
+          br: 'Labour open source e Androguard, IsMyPhonePwned ha depoù personel.'
+        },
+        personal: { en: 'ping2A (personal)', br: 'ping2A (personel)' },
+        papers: { en: 'Papers & talks', br: 'Paperioù ha prezegennoù' },
+        tools: { en: 'Tools & older projects', br: 'Ostilhoù ha raktresoù kozh' },
+        'theme-dark': { en: '🌙 Dark', br: '🌙 Teñval' },
+        'theme-light': { en: '☀️ Light', br: '☀️ Sklaer' },
+        title: { en: '42.bzh — ping2A', br: '42.bzh — ping2A' }
+      };
+
+      var lang = localStorage.getItem(LANG_KEY) || 'en';
+      document.documentElement.lang = lang === 'br' ? 'br' : 'en';
+
+      var themePreferred = localStorage.getItem(THEME_KEY) || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', themePreferred);
+
+      function applyLang() {
+        document.querySelectorAll('[data-i18n]').forEach(function(el) {
+          var key = el.getAttribute('data-i18n');
+          if (!t[key] || !t[key][lang]) return;
+          var val = t[key][lang];
+          if (key === 'intro1' || key === 'intro2' || key === 'intro3') {
+            el.innerHTML = val;
+          } else {
+            el.textContent = val;
+          }
+        });
+        var langLabel = document.getElementById('lang-label');
+        if (langLabel) langLabel.textContent = lang === 'br' ? 'Brezhoneg' : 'EN';
+        var langBtn = document.getElementById('lang-toggle');
+        if (langBtn) {
+          langBtn.classList.toggle('active', lang === 'br');
+          langBtn.setAttribute('aria-label', lang === 'br' ? 'Cheñch yezh (English)' : 'Cheñch yezh (Brezhoneg)');
+        }
+        var themeBtn = document.getElementById('theme-toggle');
+        if (themeBtn) {
+          var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+          themeBtn.textContent = isDark ? t['theme-light'][lang] : t['theme-dark'][lang];
+        }
+        if (t.title && t.title[lang]) document.title = t.title[lang];
       }
-      updateLabel();
-      btn.addEventListener('click', function() {
-        const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', next);
-        localStorage.setItem(storageKey, next);
-        updateLabel();
-      });
+
+      function init() {
+        applyLang();
+        document.getElementById('lang-toggle').addEventListener('click', function() {
+          lang = lang === 'br' ? 'en' : 'br';
+          localStorage.setItem(LANG_KEY, lang);
+          document.documentElement.lang = lang === 'br' ? 'br' : 'en';
+          applyLang();
+        });
+        document.getElementById('theme-toggle').addEventListener('click', function() {
+          var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', next);
+          localStorage.setItem(THEME_KEY, next);
+          applyLang();
+        });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
     })();
   </script>
 </body>
