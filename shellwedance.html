@@ -569,8 +569,18 @@
 
       try {
         log('init: loading WASM module');
+        // Fetch WASM ourselves and pass ArrayBuffer to init so we bypass instantiateStreaming.
+        // On Windows/Chrome, instantiateStreaming can fail if the server doesn't send MIME type application/wasm;
+        // passing the buffer uses WebAssembly.instantiate() which is more reliable.
+        const wasmUrl = new URL('pkg/shell_we_dance_wasm_bg.wasm', document.baseURI || window.location.href).href;
+        setIndicatorsFetchStatus('loading', 'Indicators: loading WASM…');
+        const wasmResp = await fetch(wasmUrl);
+        if (!wasmResp.ok) {
+          throw new Error(`WASM file not found: ${wasmResp.status} ${wasmResp.statusText}. Check that pkg/shell_we_dance_wasm_bg.wasm exists and is served from the same origin.`);
+        }
+        const wasmBuffer = await wasmResp.arrayBuffer();
         const { default: initWasm, ShellWeDanceApp } = await import('./pkg/shell_we_dance_wasm.js');
-        await initWasm();
+        await initWasm(wasmBuffer);
         log('init: WASM loaded');
         app = new ShellWeDanceApp();
         log('init: request manifest', { url: MANIFEST_URL });
