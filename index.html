@@ -85,6 +85,16 @@
       margin: 0;
     }
 
+    .logo-text a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .logo-text a:hover {
+      color: var(--accent);
+      text-decoration: underline;
+    }
+
     .theme-toggle {
       background: var(--bg-secondary);
       border: 1px solid var(--border);
@@ -289,7 +299,7 @@
       <img src="assets/profile.png" alt="ping2A" class="profile-img" />
     </div>
     <header>
-      <h1 class="logo-text">42.bzh</h1>
+      <h1 class="logo-text"><a href="42.html" title="Petra eo 42 ? (Brezhoneg)">42.bzh</a></h1>
       <div class="header-actions">
         <button type="button" class="lang-toggle" id="lang-toggle" aria-label="Switch language" title="Brezhoneg / English">
           <span class="flag-icon" aria-hidden="true">
@@ -342,9 +352,9 @@
         <li class="project-item"><a href="https://github.com/androguard/freedump" target="_blank" rel="noopener">Freedump</a> — Dump process memory on Android/Linux using Frida; useful for forensics and analysis.</li>
       </ul>
 
-      <p class="org-label">IsMyPhonePwned</p>
+      <p class="org-label"><a href="https://ismyphonepwned.com/" target="_blank" rel="noopener">IsMyPhonePwned</a></p>
       <ul class="project-grid">
-        <li class="project-item"><a href="https://github.com/IsMyPhonePwned/mimic" target="_blank" rel="noopener">Mimic</a> — Rust library to detect files crafted to exploit parsing CVEs (DNG/RTF/TTF/RAR/PDF). Analysis runs in-browser; nothing uploaded.</li>
+        <li class="project-item"><a href="https://ismyphonepwned.com/mimic.html" target="_blank" rel="noopener">Mimic</a> — Rust library to detect files crafted to exploit parsing CVEs (DNG/RTF/TTF/RAR/PDF). Analysis runs in-browser; nothing uploaded. (<a href="https://github.com/IsMyPhonePwned/mimic" target="_blank" rel="noopener">GitHub</a>)</li>
         <li class="project-item"><a href="https://github.com/IsMyPhonePwned/bugreport-extractor-library" target="_blank" rel="noopener">bugreport-extractor-library</a> — Rust library to read and extract structured data from Android bug reports for pwned-check and analysis.</li>
         <li class="project-item"><a href="https://github.com/IsMyPhonePwned/webadb-rs" target="_blank" rel="noopener">webadb-rs</a> — Run ADB commands from the browser via WebUSB; powers the IsMyPhonePwned bugreport flow.</li>
       </ul>
