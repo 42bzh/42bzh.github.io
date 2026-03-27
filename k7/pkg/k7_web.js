@@ -12,6 +12,18 @@ export class K7Web {
         wasm.__wbg_k7web_free(ptr, 0);
     }
     /**
+     * Bind a canvas once, then call draw_bound_canvas() each frame to avoid string marshaling.
+     * @param {string} canvas_id
+     */
+    bind_canvas(canvas_id) {
+        const ptr0 = passStringToWasm0(canvas_id, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const len0 = WASM_VECTOR_LEN;
+        const ret = wasm.k7web_bind_canvas(this.__wbg_ptr, ptr0, len0);
+        if (ret[1]) {
+            throw takeFromExternrefTable0(ret[0]);
+        }
+    }
+    /**
      * GFX: set camera offset.
      * @param {number} x
      * @param {number} y
@@ -39,6 +51,9 @@ export class K7Web {
     circfill(x, y, r, col) {
         wasm.k7web_circfill(this.__wbg_ptr, x, y, r, col);
     }
+    clear_dmg_wave_cart() {
+        wasm.k7web_clear_dmg_wave_cart(this.__wbg_ptr);
+    }
     /**
      * GFX API for Python/JS: clear screen with color index 0..15.
      * @param {number} col
@@ -65,6 +80,15 @@ export class K7Web {
         const ptr0 = passArray8ToWasm0(data, wasm.__wbindgen_malloc);
         const len0 = WASM_VECTOR_LEN;
         const ret = wasm.k7web_copy_from_u8(this.__wbg_ptr, x, y, w, h, ptr0, len0);
+        if (ret[1]) {
+            throw takeFromExternrefTable0(ret[0]);
+        }
+    }
+    /**
+     * Draw to the canvas previously bound by bind_canvas().
+     */
+    draw_bound_canvas() {
+        const ret = wasm.k7web_draw_bound_canvas(this.__wbg_ptr);
         if (ret[1]) {
             throw takeFromExternrefTable0(ret[0]);
         }
@@ -337,6 +361,13 @@ export class K7Web {
         wasm.k7web_reset_sprite_bank(this.__wbg_ptr);
     }
     /**
+     * Load DMG wave RAM entries for `dmgwavepreset(n)` (each string: 32 hex nibbles → 16 bytes). Skips invalid entries.
+     * @param {Array<any>} hexes
+     */
+    set_dmg_wave_cart_hexes(hexes) {
+        wasm.k7web_set_dmg_wave_cart_hexes(this.__wbg_ptr, hexes);
+    }
+    /**
      * Set current font by name: "pico8", "bbc", "appleii", "cbmii", "trollmini".
      * @param {string} name
      * @returns {boolean}
@@ -520,6 +551,10 @@ function __wbg_get_imports() {
             const ret = arg0.getElementById(getStringFromWasm0(arg1, arg2));
             return isLikeNone(ret) ? 0 : addToExternrefTable0(ret);
         },
+        __wbg_get_a8ee5c45dabc1b3b: function(arg0, arg1) {
+            const ret = arg0[arg1 >>> 0];
+            return ret;
+        },
         __wbg_instanceof_CanvasRenderingContext2d_08b9d193c22fa886: function(arg0) {
             let result;
             try {
@@ -548,6 +583,10 @@ function __wbg_get_imports() {
                 result = false;
             }
             const ret = result;
+            return ret;
+        },
+        __wbg_length_b3416cf66a5452c8: function(arg0) {
+            const ret = arg0.length;
             return ret;
         },
         __wbg_new_a70fbab9066b301f: function() {
