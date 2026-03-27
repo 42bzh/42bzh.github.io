@@ -635,6 +635,9 @@
         <label style="display:inline-flex;align-items:center;gap:4px;color:#aaa;font-size:0.9rem;"><input type="checkbox" id="profiler-toggle" /> Profiler</label>
         <button type="button" id="cheat-sheet-btn" class="btn">Cheat sheet</button>
         <button type="button" id="share-game-btn" class="btn" title="Encode game into URL (compact: deflate + URL-safe base64; preserves other query params)">Share game</button>
+        <button type="button" id="export-cart-png-btn" class="btn" title="Download PNG label with embedded cart (code, sounds, map, sprites, audio_cart) — PICO-8–style">Export cart PNG</button>
+        <button type="button" id="import-cart-png-btn" class="btn" title="Load cart from a K7 PNG (k7cart chunk)">Import cart PNG</button>
+        <input type="file" id="k7-cart-png-file" accept="image/png,.png" style="display:none;" />
         <label for="example-select" style="color:var(--text-muted);font-size:0.9rem;">Example:</label>
         <select id="example-select" class="btn" style="padding:0.35rem 0.5rem;">
           <option value="default">Default</option>
@@ -674,6 +677,7 @@
           <option value="llm_demo">LLM (OpenAI-compatible API)</option>
           <option value="sequencer">Sequence8-style sequencer</option>
           <option value="sable">Sable (falling sand)</option>
+          <option value="k7_cart_tools">K7 cart PNG (tools hint)</option>
         </select>
         <button type="button" id="load-demo-btn" class="btn" title="Load the showcase demo (index.html demo) into the editor to debug">Load demo</button>
         <div id="multiplayer-matchmaking" style="display:none; margin-top:8px; padding:8px; background:#1e1e2a; border-radius:6px;">
@@ -970,7 +974,7 @@ k7.llm_take_error()     # Returns error message or None</pre>
         </section>
         <section>
           <h3>Shortcuts</h3>
-          <p>Run = click Run. <strong>P = pause/resume</strong> game. <strong>Share game</strong> = encode full game into the URL (deflate + URL-safe base64; empty sound slots omitted) and copy link. Code tab: Space = play sound (when Sounds panel active). Hot reload = re-run on code change. Profiler = show FPS/frame time overlay.</p>
+          <p>Run = click Run. <strong>P = pause/resume</strong> game. <strong>Share game</strong> = encode full game into the URL (deflate + URL-safe base64; empty sound slots omitted) and copy link. <strong>Export cart PNG</strong> / <strong>Import cart PNG</strong> = PICO-8–style share: canvas as label + cart in PNG <code>tEXt</code> <code>k7cart</code> (same payload as URL). CLI: <code>crates/k7-web/tools/k7_cart_png.py</code>. Code tab: Space = play sound (when Sounds panel active). Hot reload = re-run on code change. Profiler = show FPS/frame time overlay.</p>
           <p>In code: <code>k7.paused()</code> returns 1 if paused, 0 otherwise; <code>k7.toggle_pause()</code> toggles pause. <code>k7.frame()</code> returns the current frame number (incremented each game loop tick) for timing or “once per frame” logic.</p>
         </section>
       </div>
