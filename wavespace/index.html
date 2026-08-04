@@ -8,6 +8,12 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="theme-color" content="#16161f" />
     <title>WaveSpace</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Exo+2:wght@600;700;800&family=Orbitron:wght@700;800;900&display=swap"
+      rel="stylesheet"
+    />
     <style>
       :root { color-scheme: dark; }
       * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -18,7 +24,7 @@
         -webkit-text-size-adjust: 100%;
       }
       body {
-        font-family: ui-sans-serif, system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+        font-family: "Exo 2", ui-sans-serif, system-ui, sans-serif;
         overscroll-behavior: none;
       }
       #app { position: fixed; inset: 0; }
@@ -35,20 +41,49 @@
         position: absolute; inset: 0; display: grid; place-items: center;
         padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
         background: linear-gradient(180deg, #c42878 0%, #2a1040 48%, #12121a 100%);
-        color: #1ef0f0; letter-spacing: .35em;
-        font-size: 13px; font-weight: 600; text-transform: uppercase;
+        color: #1ef0f0; letter-spacing: .28em;
+        font-family: "Orbitron", "Exo 2", ui-sans-serif, system-ui, sans-serif;
+        font-size: 14px; font-weight: 800; text-transform: uppercase;
         transition: opacity .45s ease; z-index: 10;
       }
       #boot.gone { opacity: 0; pointer-events: none; }
+      #boot .boot-inner {
+        display: flex; flex-direction: column; align-items: center; gap: 14px;
+      }
+      #boot .boot-ver {
+        letter-spacing: .2em;
+        font-size: 11px;
+        font-weight: 700;
+        color: #ff8a4a;
+        opacity: 0.9;
+      }
+      #version {
+        position: fixed;
+        right: max(12px, env(safe-area-inset-right));
+        bottom: max(10px, env(safe-area-inset-bottom));
+        z-index: 20;
+        pointer-events: none;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: rgba(168, 216, 255, 0.55);
+      }
     </style>
-    <script type="module" crossorigin src="./assets/index-DpHYP7rW.js"></script>
-    <link rel="modulepreload" crossorigin href="./assets/three-DqjNMt64.js">
+    <script type="module" crossorigin src="./assets/index-DMzEvsTV.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/three-ioOFaKUM.js">
   </head>
   <body>
     <div id="app">
       <canvas id="gl"></canvas>
       <canvas id="hud"></canvas>
-      <div id="boot">WaveSpace</div>
+      <div id="boot">
+        <div class="boot-inner">
+          <span>WaveSpace</span>
+          <span class="boot-ver">v0.1.0</span>
+        </div>
+      </div>
     </div>
+    <div id="version">v0.1.0</div>
   </body>
 </html>
