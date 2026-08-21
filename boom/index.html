@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <title>BOOM</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23000'/%3E%3Cpath d='M16 4 L28 16 L16 28 L4 16 Z' fill='none' stroke='%23ff2d2d' stroke-width='2'/%3E%3C/svg%3E" />
+    <script type="module" crossorigin src="./assets/index-BtAlz1AX.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-ZDXMys-d.css">
+  </head>
+  <body>
+    <canvas id="viewport"></canvas>
+
+    <!-- ============ HUD ============ -->
+    <div id="hud" class="hud" aria-hidden="true">
+      <div class="hud-damage" id="hud-damage"></div>
+      <div class="hud-lowhealth" id="hud-lowhealth"></div>
+
+      <!-- crosshair -->
+      <div class="reticle" id="reticle">
+        <svg viewBox="0 0 100 100" class="reticle-svg">
+          <g class="reticle-arms" id="reticle-arms">
+            <line x1="50" y1="30" x2="50" y2="42" />
+            <line x1="50" y1="58" x2="50" y2="70" />
+            <line x1="30" y1="50" x2="42" y2="50" />
+            <line x1="58" y1="50" x2="70" y2="50" />
+          </g>
+          <circle class="reticle-dot" cx="50" cy="50" r="1.2" />
+        </svg>
+        <svg viewBox="0 0 100 100" class="hitmarker" id="hitmarker">
+          <line x1="36" y1="36" x2="45" y2="45" />
+          <line x1="64" y1="36" x2="55" y2="45" />
+          <line x1="36" y1="64" x2="45" y2="55" />
+          <line x1="64" y1="64" x2="55" y2="55" />
+        </svg>
+      </div>
+
+      <!-- top-left: radar -->
+      <div class="minimap" id="minimap-wrap">
+        <canvas id="minimap" width="300" height="300"></canvas>
+        <div class="minimap-range"><span id="minimap-range">45</span>M</div>
+      </div>
+
+      <!-- bottom-left: vitals -->
+      <div class="vitals">
+        <div class="vitals-row">
+          <span class="vitals-label">VIT</span>
+          <div class="bar bar-health">
+            <div class="bar-fill" id="health-fill"></div>
+            <div class="bar-ghost" id="health-ghost"></div>
+          </div>
+          <span class="vitals-num" id="health-num">100</span>
+        </div>
+        <div class="vitals-row">
+          <span class="vitals-label">ARM</span>
+          <div class="bar bar-armor">
+            <div class="bar-fill" id="armor-fill"></div>
+          </div>
+          <span class="vitals-num" id="armor-num">0</span>
+        </div>
+        <div class="dash-pips" id="dash-pips"></div>
+      </div>
+
+      <!-- bottom-right: weapon -->
+      <div class="weapon">
+        <div class="weapon-ammo">
+          <span id="ammo-mag">8</span><span class="weapon-slash">/</span><span id="ammo-reserve" class="weapon-reserve">64</span>
+        </div>
+        <div class="weapon-name" id="weapon-name">SAWED-OFF</div>
+        <div class="weapon-reload" id="weapon-reload"><div class="weapon-reload-fill" id="weapon-reload-fill"></div></div>
+        <ol class="weapon-list" id="weapon-list"></ol>
+      </div>
+
+      <!-- top-left: score -->
+      <div class="score">
+        <div class="score-value" id="score-value">0</div>
+        <div class="score-combo" id="score-combo"><span id="combo-mult">x1</span><div class="combo-bar"><div id="combo-fill"></div></div></div>
+      </div>
+
+      <!-- top-right: wave -->
+      <div class="wavebox">
+        <div class="wave-label" id="wave-label">WAVE</div>
+        <div class="wave-num" id="wave-num">1</div>
+        <div class="wave-left"><span id="wave-remaining">0</span> <span id="wave-suffix">HOSTILES</span></div>
+      </div>
+
+      <!-- center banner -->
+      <div class="banner" id="banner"><div class="banner-main" id="banner-main"></div><div class="banner-sub" id="banner-sub"></div></div>
+
+      <!-- kill feed -->
+      <ul class="killfeed" id="killfeed"></ul>
+
+      <!-- damage direction indicators -->
+      <div class="dmg-dirs" id="dmg-dirs"></div>
+
+      <!-- sniper glass: only the plumbline asks for this -->
+      <div class="scope" id="scope" aria-hidden="true">
+        <div class="scope-vignette"></div>
+        <div class="scope-ring"></div>
+        <div class="scope-cross"></div>
+        <div class="scope-dot"></div>
+      </div>
+
+      <!-- view mode tag -->
+      <div class="viewtag" id="viewtag">TACTICAL VIEW</div>
+
+      <!-- in-game key reference -->
+      <div class="keycard" id="keycard">
+        <div class="keycard-title">CONTROLS</div>
+        <dl class="keycard-list" id="keycard-list"></dl>
+      </div>
+      <div class="keyhint" id="keyhint"><kbd>H</kbd> CONTROLS</div>
+    </div>
+
+    <!-- ============ MENUS ============ -->
+    <div id="overlay" class="overlay">
+      <div class="overlay-scan"></div>
+
+      <section class="screen" id="screen-title" data-active="true">
+        <h1 class="title">
+          <span class="title-word">BOOM</span>
+          <span class="title-sub">A PROCEDURAL WIREFRAME MASSACRE</span>
+        </h1>
+        <p class="blurb">
+          Nothing here exists until you light it. The world sketches itself line by line inside your
+          muzzle flash, and the dark takes it back. Something else lives in that dark, and it is
+          coming for you at a dead sprint.
+        </p>
+        <div class="modes">
+          <button class="btn btn-primary" id="btn-start">
+            ENTER THE GRID
+            <small>SOLO · THE HORDE COMES IN WAVES</small>
+          </button>
+          <button class="btn btn-primary" id="btn-train">
+            THE RANGE
+            <small>TRAINING · ALL WEAPONS · RANDOM HOSTILES</small>
+          </button>
+          <button class="btn btn-primary" id="btn-online">
+            HUNT EACH OTHER
+            <small>ONLINE · UP TO EIGHT IN THE ARENA</small>
+          </button>
+        </div>
+        <!-- Populated from the single control table in src/ui/controls.ts. -->
+        <div class="controls" id="title-controls"></div>
+        <p class="legal">Stylised vector violence. Everything you will see is generated by math at runtime — no models, no textures, no samples.</p>
+      </section>
+
+      <section class="screen" id="screen-pause">
+        <h2 class="screen-title">PAUSED</h2>
+        <button class="btn btn-primary" id="btn-resume">RESUME</button>
+        <button class="btn" id="btn-restart-pause">ABANDON RUN</button>
+        <div class="settings" id="settings"></div>
+      </section>
+
+      <!-- Contents are built by src/ui/lobby.ts; this is only the shell. -->
+      <section class="screen screen-wide" id="screen-online">
+        <h2 class="screen-title">THE ARENA</h2>
+        <div class="lobby" id="lobby"></div>
+        <button class="btn" id="btn-lobby-back">BACK</button>
+      </section>
+
+      <section class="screen" id="screen-dead">
+        <h2 class="screen-title screen-title-dead">YOU DIED</h2>
+        <div class="results" id="results"></div>
+        <button class="btn btn-primary" id="btn-restart">GO AGAIN</button>
+      </section>
+    </div>
+
+  </body>
+</html>
