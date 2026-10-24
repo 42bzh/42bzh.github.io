@@ -2,8 +2,8 @@ Offline web client
 ==================
 client:   0.1.0
 protocol: bitchat-mesh/1
-built:    20261024T173544Z
-wasm:     release (557660 bytes)
+built:    20261024T175401Z
+wasm:     release (566537 bytes)
 source:   packages/offline-web + crates/offline-wasm (--release)
 
 Deploy
