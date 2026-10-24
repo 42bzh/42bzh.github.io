@@ -5,7 +5,7 @@ Static build of the Offline mesh UI (Rust **release** WASM + Vite).
 - **Client:** `0.1.0`
 - **Protocol:** `bitchat-mesh/1`
 - **WASM:** `release (557660 bytes)`
-- **Built:** `20261024T161222Z`
+- **Built:** `20261024T173544Z`
 
 ## Deploy
 
