@@ -1,0 +1,16 @@
+Offline web client
+==================
+client:   0.1.0
+protocol: bitchat-mesh/1
+built:    20261024T155157Z
+wasm:     release (548867 bytes)
+source:   packages/offline-web + crates/offline-wasm (--release)
+
+Deploy
+------
+Serve this folder over HTTPS (or localhost) as a static site.
+Web Bluetooth requires a secure context (https:// or http://127.0.0.1).
+
+Example:
+  npx --yes serve -l 8080 .
+  # → http://127.0.0.1:8080/
